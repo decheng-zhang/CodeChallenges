@@ -135,6 +135,7 @@ private class Node {
 	   A.insert(16);
 	   A.insert(19);
 	   A.inorder(A.root);
+	   
    }
 
 }

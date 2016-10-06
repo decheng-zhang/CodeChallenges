@@ -23,7 +23,6 @@ public class Solution {
             count =0;
         }
     }
-    
     public class trie
         {
         Node root = new Node();

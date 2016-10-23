@@ -23,8 +23,7 @@ public class mkA {
 				return -1;
 			else
 				return 0;
-		}
-		
+		}		
 	}
 	
 	PriorityQueue<node> PQ = new PriorityQueue<node>();

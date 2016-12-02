@@ -1,7 +1,12 @@
-package bellman;
+package apsp;
 import java.util.Hashtable;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.Queue;
+import java.util.LinkedList;
 public class solution {
 	
 	static class edge
@@ -18,6 +23,7 @@ public class solution {
 	{
 		int numVerts;
 		Hashtable<Integer,LinkedList<edge>> L;
+		LinkedList<edge> edge_list = new LinkedList<edge>();
 		public graph(int numVerts)
 		{
 			this.numVerts = numVerts;
@@ -30,13 +36,14 @@ public class solution {
 		
 		public void addEdge(int src, int dst, int cost)
 		{
-			L.get(src).add(new edge(src,dst,cost));
+			edge e = new edge(src,dst,cost);
+			L.get(src).add(e);
+			edge_list.add(e);
 		}
 	}
 	
 	static class bellman
 	{
-		Queue<Integer> q;
 		int[]B;
 		graph G;
 		int src;
@@ -46,57 +53,89 @@ public class solution {
 			this.G = G;
 			this.src = src;
 			B= new int[G.numVerts];
-			q = new LinkedList<Integer>();
 			for (int i=0;i<B.length;i++)
 			{
 				B[i]=Integer.MAX_VALUE;
 			}
-			B[src] = 0;
-			for (edge e:G.L.get(src))
-			{
-				B[e.dst] = e.cost;
-				q.add(e.dst);
-			}
+			B[src]=0;
 		}
 		
 		public void trigger()
 		{
-			for (int i=1;i<G.numVerts-2;i++)
+			for (int i=1;i<G.numVerts;i++)
 			{
-				int size = q.size();
-				for (int j=0;j<size;j++)
+				for (edge e:G.edge_list)
 				{
-					int cand = q.poll();
-					for (edge e:G.L.get(cand))
-					{
-						if (B[e.dst]>e.cost+B[e.src])
-						{
-							B[e.dst] = e.cost+B[e.src];
-							q.add(e.dst);
-						}
-					}
+					int src = e.src;
+					int dst = e.dst;
+					int cost = e.cost;
+					if (B[src]!=Integer.MAX_VALUE && B[dst] > B[src]+cost)
+						B[dst]=B[src]+cost;
 				}
-			}//end for
+			}
 		}//end trigger
+		
+		public boolean checkNegativeCycle()
+		{
+			int[]B_new = B.clone();
+			for (edge e:G.edge_list)
+			{
+				int src = e.src;
+				int dst = e.dst;
+				int cost = e.cost;
+				if (B_new[src]!=Integer.MAX_VALUE && B_new[dst] > B_new[src]+cost)
+					B_new[dst]=B_new[src]+cost;
+			}
+			boolean flag = false;
+			for (int i=0;i<B.length;i++)
+			{
+				if (B_new[i]<B[i])
+				{
+					flag = true;
+					break;
+				}
+			}
+		
+			return flag;
+		}
+		
+		public int[] get_vertIndices()
+		{
+			return B;
+		}
 	}
 	
-	public static void main(String[] args)
+	public static void main(String[] args) throws FileNotFoundException, IOException
 	{
-		graph G = new graph(5);
-		G.addEdge(0,1,-1);
-		G.addEdge(0,2,4);
-		G.addEdge(1,2,3);
-		G.addEdge(1,3,2);
-		G.addEdge(1,4,2);
-		G.addEdge(3,2,5);
-		G.addEdge(3,1,1);
-		G.addEdge(4,3,-3);
+		String filename = args[0];
+		BufferedReader br = new BufferedReader(new FileReader(filename));
+		String line;
+		line = br.readLine();
+		String[]inputs = line.split(" ");
+		int numVerts = Integer.parseInt(inputs[0]);
+		int numEdges = Integer.parseInt(inputs[1]);
+		graph G = new graph(numVerts+1);//extra 1 vertex for dummy vertex
+		for (int i=0;i<numEdges;i++)
+		{
+			line = br.readLine();
+			inputs = line.split(" ");
+			int src = Integer.parseInt(inputs[0]);
+			int dst = Integer.parseInt(inputs[1]);
+			int cost = Integer.parseInt(inputs[2]);
+			G.addEdge(src,dst,cost);
+		}
+		br.close();
+		//add dummy  extra edges
+		for (int i=1;i<=numVerts;i++)
+		{
+			G.addEdge(0,i,0);
+		}
 		bellman B = new bellman(0,G);
 		B.trigger();
-		for (int i=0;i<B.B.length;i++)
-		{
-			System.out.print(B.B[i]+"\t");
-		}
+		System.out.println(B.checkNegativeCycle());
+		int counter = 0;
+		for (int i:B.get_vertIndices())
+			System.out.println((counter++)+"\t"+i);
 	}
 
 }

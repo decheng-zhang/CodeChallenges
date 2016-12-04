@@ -55,5 +55,4 @@ public class Solution {
 		Solution S = new Solution();
 		System.out.println(S.longestPalindrome(input));
 	}
-
 }

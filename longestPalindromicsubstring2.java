@@ -44,4 +44,4 @@ public String longestPalindrome(String s)
 				
 		
 		return s.substring(MaxStart,MaxStart+Maxlen);
-	}
+}

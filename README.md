@@ -1,2 +1,2 @@
-# TopCoder
-Contains code for problems solved on TopCoder
+# CODE CHALLENGES
+Contains code for problems solved on programming platforms

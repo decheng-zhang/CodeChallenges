@@ -3,7 +3,7 @@
 
 
 R = 256
-prime = 100007
+prime = 100003
 
 def hash(string_item,len_):
 	H = 0

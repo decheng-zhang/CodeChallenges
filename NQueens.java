@@ -92,7 +92,6 @@ public class Solution {
 		place(0);
 		return solution;
 		
-		
-        
+		  
     }
 }

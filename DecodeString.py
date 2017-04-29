@@ -59,7 +59,6 @@ class Solution(object):
 		
 		return ans
 
-
 if __name__ == "__main__":
 	s = Solution()
 	s.decodeString("sd2[f2[e]g]i")

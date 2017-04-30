@@ -77,3 +77,65 @@ public class Solution {
 	 }
 
 }
+
+
+/*
+
+DFS-recursive, make note of direction array for traversal, forbidden conditions, for(int[]d:directions), 
+no need for visited info, if asked for nondecreasing use visited matrix to keep track of visited slots.
+
+import java.util.Stack;
+import java.util.Deque;
+import java.util.LinkedList;
+public class Solution {
+	int[][]grid;
+	int[][]matrix;
+	int[][]directions= {{0,1},{0,-1},{1,0},{-1,0}};
+	private int dfs(int m,int n)
+	{
+		if (grid[m][n]!=0)
+			return grid[m][n];
+		int dist =1;
+		for (int[]dir:directions)
+		{
+			int row=m+dir[0];
+			int col=n+dir[1];
+			if (row<0|| col<0 || row>=matrix.length||col>=matrix[0].length || matrix[m][n]>=matrix[row][col])
+				continue;
+			dist=Math.max(dist, 1+dfs(row,col));
+		}
+		grid[m][n]=dist;
+		return grid[m][n];
+	}
+	
+	 public int longestIncreasingPath(int[][] matrix) {
+		 if (matrix.length==0 || matrix[0].length==0)
+			 return 0;
+		 grid = new int[matrix.length][matrix[0].length];
+		 this.matrix = matrix;
+		 int result = 1;
+		 
+		 for (int i=0;i<grid.length;i++)
+		 {
+			 for (int j=0;j<grid[0].length;j++)
+			 {
+					 result = Math.max(result, dfs(i,j));
+			 }
+		 }
+		 System.out.println(result);
+		 return result;
+	        
+	    }
+	 public static void main(String[] args)
+	 {
+		 int[][]input = {{9,9,4},{6,6,8},{2,1,1}};
+		 //int[][]input={{1}};
+		 Solution s = new Solution();
+		 s.longestIncreasingPath(input);
+		 //System.out.println(s.dfs(2, 1));
+	 }
+
+}
+
+
+*/

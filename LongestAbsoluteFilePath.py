@@ -30,3 +30,4 @@ class Solution(object):
         if (d[tabcount-1]+char_count+tabcount>maxval and isFile):
         			maxval = d[tabcount-1]+char_count+tabcount
         return maxval
+    

@@ -6,8 +6,6 @@ public class Solution {
 	int[] fact;
 	int rank;
 	StringBuffer x;
-
-	
 	 public String getPermutation(int n, int k) {
 		 	fact = new int[n+1];
 		 	rank = k;

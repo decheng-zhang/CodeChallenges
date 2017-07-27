@@ -27,7 +27,6 @@ class Solution(object):
         for i in range(1,n+1):
             L.append(i)
         return self.utility(L)
-
 if __name__=="__main__":
     s = Solution()
     print s.numTrees(19)

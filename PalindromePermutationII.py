@@ -1,4 +1,5 @@
 from collections import defaultdict
+
 class Solution(object):
     def __init__(self):
         self.oddBall=None

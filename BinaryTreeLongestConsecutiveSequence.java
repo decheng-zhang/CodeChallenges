@@ -49,7 +49,6 @@ public class Solution {
             utility(root.left,root.val,1);
         if (root.right!=null)
             utility(root.right,root.val,1);
-        return Collections.max(cas);
-        
+        return Collections.max(cas);   
     }
 }

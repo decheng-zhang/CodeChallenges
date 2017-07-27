@@ -20,8 +20,7 @@ public class Solution {
         if (flag==true)
             return true;
         return jump(0,left);
-    }
-    
+    }    
     private boolean jump(int index, int left)
     {
         if (left<=0)
@@ -37,6 +36,5 @@ public class Solution {
                 }
             return false;
         }
-    }
-    
+    }    
 }
